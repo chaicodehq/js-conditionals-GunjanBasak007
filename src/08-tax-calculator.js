@@ -26,5 +26,28 @@
  * @returns {number} Total tax amount owed
  */
 export function calculateTax(income) {
-  // Your code here
+  // Optional safety (good practice in interviews)
+  if (typeof income !== "number" || income < 0) return 0;
+
+  let tax = 0;
+
+  // Bracket 2: 10k–30k → 10%
+  if (income > 10000) {
+    const taxableAt10 = Math.min(income, 30000) - 10000;
+    tax += taxableAt10 * 0.10;
+  }
+
+  // Bracket 3: 30k–70k → 20%
+  if (income > 30000) {
+    const taxableAt20 = Math.min(income, 70000) - 30000;
+    tax += taxableAt20 * 0.20;
+  }
+
+  // Bracket 4: above 70k → 30%
+  if (income > 70000) {
+    const taxableAt30 = income - 70000;
+    tax += taxableAt30 * 0.30;
+  }
+
+  return tax;
 }
